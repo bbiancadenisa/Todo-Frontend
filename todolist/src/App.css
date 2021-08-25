@@ -52,6 +52,31 @@ h1 {
   color: #fff;
 }
 
+.searchBar {
+  padding: 14px 32px 14px 16px;
+  border-radius: 4px 4px 4px 4px;
+  border: 2px solid #5d0cff;
+  outline: none;
+  width: 320px;
+  background: transparent;
+  color: #fff;
+  margin-bottom: 32px;
+  min-width: 415px;
+}
+
+.searchInputs {
+  display: flex;
+}
+
+.searchBar::placeholder {
+  color: #e2e2e2;
+}
+
+.searchIcon {
+  display: grid;
+  place-items: center;
+}
+
 .inputForm::placeholder {
   color: #e2e2e2;
 }
@@ -69,6 +94,23 @@ h1 {
   );
   color: #fff;
   text-transform: capitalize;
+}
+
+.navButton {
+  padding: 20px;
+  border: none;
+  border-radius: 4px 4px 4px 4px;
+  cursor: pointer;
+  outline: none;
+  background: linear-gradient(
+    90deg,
+    rgba(93, 12, 255, 1) 0%,
+    rgba(155, 0, 250, 1) 100%
+  );
+  color: #fff;
+  text-transform: capitalize;
+  margin: 10px;
+  margin-top: 30px;
 }
 
 .inputForm .edit {

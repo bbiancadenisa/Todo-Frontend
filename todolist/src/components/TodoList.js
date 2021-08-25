@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Todo from "./Todo";
 import TodoForm from "./TodoForm";
+import { Link } from "react-router-dom";
 
-function TodoList() {
+function TodoList({ pageNumber }) {
   const [todos, setTodos] = useState([]);
+  const [page, setPage] = useState(pageNumber);
+  const [pages, setPages] = useState(1);
+  const [modified, setModified] = useState(false);
 
   const addTodo = (todo) => {
     if (!todo.tasks || /^\s*$/.test(todo.tasks)) return;
@@ -16,52 +20,92 @@ function TodoList() {
     setTodos(newTodos);
   };
 
-  useEffect(async () => {
-    const result = await axios({
-      url: `http://localhost:3001/all-todos`,
-      method: "GET",
+  useEffect(() => {
+    const fetchTodos = async () => {
+      try {
+        const result = await axios
+          .get(`http://localhost:3001/all-todos?page=${page}`)
+          .then((response) => {
+            const data = response.data.data;
+            const pages = response.data.pages;
+            setTodos(data);
+            setPages(pages);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchTodos();
+  }, [page, modified, todos]);
+
+  const updateTodo = async (id, newValue) => {
+    const result = await axios.put(`http://localhost:3001/todos/${id}`, {
+      tasks: newValue.tasks,
     });
-    setTodos(result.data);
-  }, []);
-
-  const updateTodo = (todoId, newValue) => {
-    if (!newValue.text || /^\s*$/.test(newValue.text)) return;
-
-    setTodos(
-      (prev) => prev.map((item) => (item.id === todoId ? newValue : item)) //this should change the database.
-    );
+    setModified(!modified);
   };
 
   const removeTodo = async (id) => {
+    console.log(id);
     const result = await axios({
-      url: `http://localhost:3001/single-todo/${id}`,
+      url: `http://localhost:3001/todos/${id}`,
       method: "DELETE",
     });
-    setTodos(result.data);
+    setModified(!modified);
   };
 
   const completeTodo = (id) => {
     let updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
+      if (todo._id === id) {
         todo.isComplete = !todo.isComplete;
       }
       return todo;
     });
     setTodos(updatedTodos);
   };
+  if (!todos) {
+    return <div></div>;
+  } else {
+    return (
+      <div>
+        <h1>Write down your plan for today</h1>
+        <TodoForm onSubmit={addTodo} />
+        <input
+          className="searchBar"
+          type="text"
+          name="text"
+          placeholder="Search"
+        />
+        <Todo
+          todos={todos}
+          completeTodo={completeTodo}
+          removeTodo={removeTodo}
+          updateTodo={updateTodo}
+        />
 
-  return (
-    <div>
-      <h1>Write down your plan for today</h1>
-      <TodoForm onSubmit={addTodo} />
-      <Todo
-        todos={todos}
-        completeTodo={completeTodo}
-        removeTodo={removeTodo}
-        updateTodo={updateTodo}
-      />
-    </div>
-  );
+        <div>
+          <Link>
+            <button
+              onClick={() => setPage((page) => page - 1)}
+              className="navButton"
+              disabled={page === 1}
+            >
+              Previous
+            </button>
+          </Link>
+          <Link>
+            <button
+              onClick={() => setPage((page) => page + 1)}
+              className="navButton"
+              disabled={page === pages}
+            >
+              Next
+            </button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default TodoList;

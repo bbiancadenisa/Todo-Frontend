@@ -1,12 +1,16 @@
 import "./App.css";
 import TodoList from "./components/TodoList";
+import { BrowserRouter as Router } from "react-router-dom";
 
-function App() {
+function App({ match }) {
+  const pageNumber = match.params.pageNumber || 1;
+  console.log(pageNumber);
   return (
-    <div className="App">
-      <h1>To-Do</h1>
-      <TodoList />
-    </div>
+    <Router>
+      <div className="App">
+        <TodoList pageNumber={pageNumber} />
+      </div>
+    </Router>
   );
 }
 
