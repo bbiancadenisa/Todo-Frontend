@@ -3,40 +3,50 @@ import axios from "axios";
 import Todo from "./Todo";
 import TodoForm from "./TodoForm";
 import { Link } from "react-router-dom";
+import Searchbar from "./Searchbar";
 
 function TodoList({ pageNumber }) {
+  const [searchTerms, setSearchTerms] = useState("");
+  const [filteredTodos, setFilteredTodos] = useState("");
+
+  const onChangeSearch = (e) => {
+    setSearchTerms(e.target.value);
+  };
+
   const [todos, setTodos] = useState([]);
   const [page, setPage] = useState(pageNumber);
   const [pages, setPages] = useState(1);
   const [modified, setModified] = useState(false);
 
+  const fetchTodos = async () => {
+    try {
+      const result = await axios
+        .get(`http://localhost:3001/all-todos?page=${page}`)
+        .then((response) => {
+          const data = response.data.data;
+          const pages = response.data.pages;
+          setTodos(data);
+          setPages(pages);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const addTodo = (todo) => {
     if (!todo.tasks || /^\s*$/.test(todo.tasks)) return;
-    axios.post("http://localhost:3001/add-todo", {
-      tasks: todo.tasks,
-    });
-
-    const newTodos = [todo, ...todos];
-    setTodos(newTodos);
+    axios
+      .post("http://localhost:3001/add-todo", {
+        tasks: todo.tasks,
+      })
+      .then((todos) => {
+        fetchTodos();
+      });
   };
 
   useEffect(() => {
-    const fetchTodos = async () => {
-      try {
-        const result = await axios
-          .get(`http://localhost:3001/all-todos?page=${page}`)
-          .then((response) => {
-            const data = response.data.data;
-            const pages = response.data.pages;
-            setTodos(data);
-            setPages(pages);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchTodos();
-  }, [page, modified, todos]);
+  }, [page, modified]);
 
   const updateTodo = async (id, newValue) => {
     const result = await axios.put(`http://localhost:3001/todos/${id}`, {
@@ -45,12 +55,16 @@ function TodoList({ pageNumber }) {
     setModified(!modified);
   };
 
+  const searchTodo = async (searchTerms) => {
+    const result = await axios.get(
+      `http://localhost:3001/todos/${searchTerms}`
+    );
+    // setModified(!modified);
+  };
+
   const removeTodo = async (id) => {
     console.log(id);
-    const result = await axios({
-      url: `http://localhost:3001/todos/${id}`,
-      method: "DELETE",
-    });
+    const result = await axios.delete(`http://localhost:3001/todos/${id}`);
     setModified(!modified);
   };
 
@@ -63,6 +77,16 @@ function TodoList({ pageNumber }) {
     });
     setTodos(updatedTodos);
   };
+
+  if (searchTerms) {
+    return (
+      <Searchbar
+        completeTodo={completeTodo}
+        searchTerms={searchTerms}
+        onChangeSearch={onChangeSearch}
+      />
+    );
+  }
   if (!todos) {
     return <div></div>;
   } else {
@@ -75,6 +99,8 @@ function TodoList({ pageNumber }) {
           type="text"
           name="text"
           placeholder="Search"
+          value={searchTerms}
+          onChange={onChangeSearch}
         />
         <Todo
           todos={todos}
@@ -96,7 +122,7 @@ function TodoList({ pageNumber }) {
           <Link>
             <button
               onClick={() => setPage((page) => page + 1)}
-              className="navButton"
+              className="navButton2"
               disabled={page === pages}
             >
               Next

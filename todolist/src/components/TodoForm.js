@@ -1,12 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  input: {
+    marginBottom: "10px",
+    padding: "14px 32px 14px 16px",
+    borderRadius: "4px 0 0 4px",
+    border: "2px solid #5d0cff",
+    outline: "none",
+    width: "375px",
+    background: "transparent",
+    color: "#fff",
+    minHeight: "55px",
+  },
+});
 
 function TodoForm(props) {
+  const classes = useStyles();
+
   const [input, setInput] = useState(props.edit ? props.edit.value : "");
   const inputRef = useRef(null);
 
   useEffect(() => {
     inputRef.current.focus();
-  });
+  }, []);
 
   const handleChange = (e) => {
     setInput(e.target.value);
@@ -33,7 +50,7 @@ function TodoForm(props) {
               type="text"
               value={input}
               name="text"
-              className="inputForm"
+              className={classes.input}
               onChange={handleChange}
               ref={inputRef}
             />
@@ -46,7 +63,7 @@ function TodoForm(props) {
               type="text"
               value={input}
               name="text"
-              className="inputForm"
+              className={classes.input}
               onChange={handleChange}
               ref={inputRef}
             />

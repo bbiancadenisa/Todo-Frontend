@@ -38,10 +38,10 @@ h1 {
   opacity: 0.4;
 }
 
-.todoForm {
-  margin-bottom: 32px;
-}
-
+/* .todoForm {
+  margin-bottom: 30px;
+} */
+/* 
 .inputForm {
   padding: 14px 32px 14px 16px;
   border-radius: 4px 0 0 4px;
@@ -50,7 +50,7 @@ h1 {
   width: 320px;
   background: transparent;
   color: #fff;
-}
+} */
 
 .searchBar {
   padding: 14px 32px 14px 16px;
@@ -60,26 +60,26 @@ h1 {
   width: 320px;
   background: transparent;
   color: #fff;
-  margin-bottom: 32px;
-  min-width: 415px;
+  margin-bottom: 30px;
+  width: 465px;
+  min-height: 55px;
+  margin-top: 20px;
 }
 
 .searchInputs {
   display: flex;
 }
-
-.searchBar::placeholder {
-  color: #e2e2e2;
-}
-
-.searchIcon {
-  display: grid;
-  place-items: center;
-}
-
-.inputForm::placeholder {
-  color: #e2e2e2;
-}
+/* .input {
+  margin-bottom: "10px";
+  padding: "14px 32px 14px 16px";
+  border-radius: "4px 0 0 4px";
+  border: "2px solid #5d0cff";
+  outline: "none";
+  width: "375px";
+  background: "transparent";
+  color: "#fff";
+  min-height: "55px";
+} */
 
 .todoButton {
   padding: 16px;
@@ -94,6 +94,7 @@ h1 {
   );
   color: #fff;
   text-transform: capitalize;
+  min-height: 55px;
 }
 
 .navButton {
@@ -111,6 +112,26 @@ h1 {
   text-transform: capitalize;
   margin: 10px;
   margin-top: 30px;
+}
+
+.navButton2 {
+  padding: 20px;
+  padding-left: 32px;
+  padding-right: 32px;
+  border: none;
+  border-radius: 4px 4px 4px 4px;
+  cursor: pointer;
+  outline: none;
+  background: linear-gradient(
+    90deg,
+    rgba(93, 12, 255, 1) 0%,
+    rgba(155, 0, 250, 1) 100%
+  );
+  color: #fff;
+  text-transform: capitalize;
+  margin: 10px;
+  margin-top: 30px;
+  margin-left: 280px;
 }
 
 .inputForm .edit {

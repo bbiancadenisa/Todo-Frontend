@@ -43,7 +43,7 @@ function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
         </div>
       ));
     } else {
-      return <div></div>;
+      return <div />;
     }
   }
 }
