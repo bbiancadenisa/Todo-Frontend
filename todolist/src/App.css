@@ -19,12 +19,12 @@ body {
   flex-direction: column;
   justify-content: start;
   width: 520px;
-  min-height: 600px;
   background: #161a2b;
   text-align: center;
   margin: 128px auto;
   border-radius: 10px;
   padding-bottom: 32px;
+  height: 750px;
 }
 
 h1 {
@@ -37,20 +37,6 @@ h1 {
   text-decoration: line-through;
   opacity: 0.4;
 }
-
-/* .todoForm {
-  margin-bottom: 30px;
-} */
-/* 
-.inputForm {
-  padding: 14px 32px 14px 16px;
-  border-radius: 4px 0 0 4px;
-  border: 2px solid #5d0cff;
-  outline: none;
-  width: 320px;
-  background: transparent;
-  color: #fff;
-} */
 
 .searchBar {
   padding: 14px 32px 14px 16px;
@@ -69,17 +55,6 @@ h1 {
 .searchInputs {
   display: flex;
 }
-/* .input {
-  margin-bottom: "10px";
-  padding: "14px 32px 14px 16px";
-  border-radius: "4px 0 0 4px";
-  border: "2px solid #5d0cff";
-  outline: "none";
-  width: "375px";
-  background: "transparent";
-  color: "#fff";
-  min-height: "55px";
-} */
 
 .todoButton {
   padding: 16px;
@@ -145,6 +120,10 @@ h1 {
     rgba(17, 122, 255, 1) 100%
   );
   padding: 16px 22px;
+}
+
+.todolist {
+  min-height: 595px;
 }
 
 .todo-container {

@@ -17,9 +17,8 @@ const useStyles = makeStyles({
 
 function TodoForm(props) {
   const classes = useStyles();
-
-  const [input, setInput] = useState(props.edit ? props.edit.value : "");
   const inputRef = useRef(null);
+  const [input, setInput] = useState(props.edit ? props.edit.value : "");
 
   useEffect(() => {
     inputRef.current.focus();

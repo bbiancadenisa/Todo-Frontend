@@ -4,18 +4,11 @@ import { RiCloseCircleLine } from "react-icons/ri";
 import { TiEdit } from "react-icons/ti";
 
 function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
-  const [edit, setEdit] = useState({
-    _id: null,
-    value: "",
-  });
+  const [edit, setEdit] = useState({ _id: null, value: "" });
 
   const submitUpdate = (value) => {
-    console.log(edit);
     updateTodo(edit._id, value);
-    setEdit({
-      _id: null,
-      value: "",
-    });
+    setEdit({ _id: null, value: "" });
   };
 
   if (edit._id) {
